@@ -1,8 +1,6 @@
-<?php defined('BASEPATH')or exit('No direct script access allowed');
-
-class Pengembalian extends CI_Model
+<?php
+class Pengembalian_Model extends CI_Model
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -12,7 +10,7 @@ class Pengembalian extends CI_Model
 	{
 		 $this->db->order_by('kode_pengembalian','ASC');
 		$query=$getData = $this->db->get('pengembalian');
-		
+
 		if($getData->num_rows()>0)
 			return $query;
 		else
@@ -24,6 +22,13 @@ class Pengembalian extends CI_Model
 		$this->db->where('kode_pengembalian',$id);
 		return $this->db->get('pengembalian')->row();
 	}
+
+	public function get_by_id_user($id)
+    {
+        $this->db->where('id_user', $id);
+        $query = $this->db->get('pengembalian');
+        return $query->num_rows();
+    }
 
 	function tambah($data)
 	{

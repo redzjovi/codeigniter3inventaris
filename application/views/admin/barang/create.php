@@ -70,7 +70,7 @@
         <div class="form-group">
             <div class="col-md-3">Keterangan</div>
             <div class="col-md-9">
-                <textarea class="form-control" name="keterangan" style="resize: none;"><?php echo set_value('keterangan') ?></textarea>
+                <textarea class="form-control" name="keterangan" style="resize: none;"><?php echo set_value('keterangan'); ?></textarea>
             </div>
         </div>
     </div>

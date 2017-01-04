@@ -1,6 +1,12 @@
 <?php
 class Login extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('User_Model');
+    }
+
     public function index()
     {
         $this->form_validation->set_rules('username', 'username', 'required|alpha_numeric');
@@ -12,8 +18,7 @@ class Login extends CI_Controller
         }
         else
         {
-            $this->load->model('user');
-            $valid_user = $this->user->check_credential();
+            $valid_user = $this->User_Model->check_credential();
 
             if ($valid_user === FALSE)
             {

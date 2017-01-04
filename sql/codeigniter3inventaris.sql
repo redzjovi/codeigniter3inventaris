@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2017 at 05:01 AM
+-- Generation Time: Jan 04, 2017 at 06:13 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `inventaris`
+-- Database: `codeigniter3inventaris`
 --
 
 -- --------------------------------------------------------
@@ -28,22 +28,13 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `barang`;
 CREATE TABLE IF NOT EXISTS `barang` (
-  `id_barang` int(11) NOT NULL,
+`id_barang` int(11) NOT NULL,
   `kode_barang` varchar(10) NOT NULL,
   `nama_barang` varchar(30) NOT NULL,
   `jumlah_barang` int(11) NOT NULL,
   `status` enum('Baik','Rusak','Rusak Berat','Hilang') NOT NULL,
-  `id_kategori` int(11) NOT NULL,
-  `id_detail_barang` int(11) NOT NULL
+  `id_kategori` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `barang`
---
-
-INSERT INTO `barang` (`id_barang`, `kode_barang`, `nama_barang`, `jumlah_barang`, `status`, `id_kategori`, `id_detail_barang`) VALUES
-(1402003, '', 'Laptop', 12, 'Baik', 1, 2),
-(1402016, '', 'CAMERA', 1, 'Baik', 4, 3);
 
 -- --------------------------------------------------------
 
@@ -54,20 +45,13 @@ INSERT INTO `barang` (`id_barang`, `kode_barang`, `nama_barang`, `jumlah_barang`
 DROP TABLE IF EXISTS `detail_barang`;
 CREATE TABLE IF NOT EXISTS `detail_barang` (
 `id_detail_barang` int(11) NOT NULL,
+  `id_barang` int(11) NOT NULL,
   `madein_barang` varchar(20) NOT NULL,
   `merk_barang` varchar(20) NOT NULL,
   `asal_dana` varchar(10) NOT NULL,
   `tahun_pengadaan` int(4) NOT NULL,
   `keterangan` text NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `detail_barang`
---
-
-INSERT INTO `detail_barang` (`id_detail_barang`, `madein_barang`, `merk_barang`, `asal_dana`, `tahun_pengadaan`, `keterangan`) VALUES
-(2, 'Japan', 'Asus', 'BOS', 2014, 'ini adalah milik jurusan RPL'),
-(3, 'japan', 'canon', 'kas', 2016, 'Barang ini adalah milik jurusan MULTIMEDIA');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -79,15 +63,7 @@ DROP TABLE IF EXISTS `kategori_barang`;
 CREATE TABLE IF NOT EXISTS `kategori_barang` (
 `id_kategori` int(11) NOT NULL,
   `nama_kategori` varchar(15) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `kategori_barang`
---
-
-INSERT INTO `kategori_barang` (`id_kategori`, `nama_kategori`) VALUES
-(1, 'Laptop'),
-(4, 'camera');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -134,7 +110,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE IF NOT EXISTS `role` (
 `id_role` int(11) NOT NULL,
   `nama_role` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `role`
@@ -161,14 +137,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `jenis_kelamin` enum('L','P') NOT NULL,
   `jurusan` enum('TKI','RPL','TKJ','MM') NOT NULL,
   `id_role` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama_user`, `alamat`, `jenis_kelamin`, `jurusan`, `id_role`) VALUES
-(1, '1402011232', 'seli', 'seliantika', '', 'P', 'RPL', 2);
+(1, 'admin', 'admin', 'admin', '', 'L', 'RPL', 2);
 
 --
 -- Indexes for dumped tables
@@ -178,7 +154,7 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `nama_user`, `alamat`, `j
 -- Indexes for table `barang`
 --
 ALTER TABLE `barang`
- ADD PRIMARY KEY (`id_barang`), ADD KEY `FK_barang1` (`id_kategori`), ADD KEY `FK_barangn` (`id_detail_barang`);
+ ADD PRIMARY KEY (`id_barang`), ADD KEY `FK_barang1` (`id_kategori`);
 
 --
 -- Indexes for table `detail_barang`
@@ -221,15 +197,20 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `barang`
+--
+ALTER TABLE `barang`
+MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `detail_barang`
 --
 ALTER TABLE `detail_barang`
-MODIFY `id_detail_barang` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id_detail_barang` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `kategori_barang`
 --
 ALTER TABLE `kategori_barang`
-MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pengembalian`
 --
@@ -239,44 +220,12 @@ MODIFY `id_pengembalian` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `barang`
---
-ALTER TABLE `barang`
-ADD CONSTRAINT `barang_ibfk_2` FOREIGN KEY (`id_detail_barang`) REFERENCES `detail_barang` (`id_detail_barang`),
-ADD CONSTRAINT `barang_ibfk_3` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_barang` (`id_kategori`);
-
---
--- Constraints for table `peminjaman`
---
-ALTER TABLE `peminjaman`
-ADD CONSTRAINT `peminjaman_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-ADD CONSTRAINT `peminjaman_ibfk_2` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
-
---
--- Constraints for table `pengembalian`
---
-ALTER TABLE `pengembalian`
-ADD CONSTRAINT `pengembalian_ibfk_1` FOREIGN KEY (`id_peminjaman`) REFERENCES `peminjaman` (`id_peminjaman`),
-ADD CONSTRAINT `pengembalian_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
-ADD CONSTRAINT `pengembalian_ibfk_3` FOREIGN KEY (`id_barang`) REFERENCES `barang` (`id_barang`);
-
---
--- Constraints for table `user`
---
-ALTER TABLE `user`
-ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`);
-
+MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

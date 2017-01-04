@@ -1,8 +1,6 @@
-<?php defined('BASEPATH')or exit('No direct script access allowed');
-
-class Peminjaman extends CI_Model
+<?php
+class Peminjaman_Model extends CI_Model
 {
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -12,7 +10,7 @@ class Peminjaman extends CI_Model
 	{
 		 $this->db->order_by('kode_pinjam','ASC');
 		$query=$getData = $this->db->get('peminjaman');
-		
+
 		if($getData->num_rows()>0)
 			return $query;
 		else
@@ -25,7 +23,14 @@ class Peminjaman extends CI_Model
 		return $this->db->get('peminjaman')->row();
 	}
 
-	function tambah($data)
+	public function get_by_id_user($id)
+    {
+        $this->db->where('id_user', $id);
+        $query = $this->db->get('peminjaman');
+        return $query->num_rows();
+    }
+
+	public function tambah($data)
 	{
 		$this->db->insert('peminjaman',$data);
 		return TRUE;

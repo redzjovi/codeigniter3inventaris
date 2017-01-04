@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-header pull-left">
-            <a href="index.html" class="navbar-brand">
+            <a class="navbar-brand" href="<?php echo site_url('admin/user'); ?>">
                 <small><i class="fa fa-leaf"></i> ICT INVENTORY</small>
             </a>
         </div>
