@@ -1,13 +1,13 @@
 <?php
-class Peminjaman extends CI_Controller
+class Pengembalian extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Barang_Model');
-        $this->load->model('Peminjaman_Model');
+        // $this->load->model('Barang_Model');
+        // $this->load->model('Peminjaman_Model');
         $this->load->model('Pengembalian_Model');
-        $this->load->model('User_Model');
+        // $this->load->model('User_Model');
 
         if ($this->session->userdata('id_role') != 2)
         {
@@ -18,11 +18,11 @@ class Peminjaman extends CI_Controller
     public function index()
 	{
 		$data['breadcrumb'] = array(
-			array('text' => 'Peminjaman'),
+			array('text' => 'Pengembalian'),
 		);
-        $data['peminjaman']= $this->Peminjaman_Model->get_all();
-        $data['title'] = 'Peminjaman';
-		$data['view'] = 'peminjaman/index';
+        $data['pengembalian']= $this->Pengembalian_Model->get_all();
+        $data['title'] = 'Pengembalian';
+		$data['view'] = 'pengembalian/index';
 		$this->load->view('admin/layout/template', $data);
 	}
 
@@ -83,12 +83,21 @@ class Peminjaman extends CI_Controller
         }
     }
 
+    public function view($id)
+    {
+        $data['breadcrumb'] = array(
+			array('link' => site_url('admin/pengembalian'), 'text' => 'Pengembalian'),
+            array('text' => 'Lihat Pengembalian'),
+		);
+        $data['pengembalian'] = $this->Pengembalian_Model->get_by_id($id);
+        $data['title'] = 'Lihat Pengembalian';
+        $data['view'] = 'pengembalian/view';
+        $this->load->view('admin/layout/template', $data);
+    }
+
     public function returned($id)
     {
-        $data = array(
-            'tanggal_dikembalikan' => date('Y-m-d H:i:s'),
-            'status' => 1,
-        );
+        $data = array('status' => 1);
         $this->Pengembalian_Model->update_status($id, $data); // update status in pengembalian
 
         $peminjaman = $this->Peminjaman_Model->get_by_id($id);
