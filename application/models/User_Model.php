@@ -45,6 +45,15 @@ class User_Model extends CI_Model
         return $query->num_rows();
     }
 
+    public function get_by_nama_role($id)
+    {
+        $this->db->from('user');
+        $this->db->join('role', 'role.id_role = user.id_role', 'left');
+        $this->db->where('role.nama_role', $id);
+        $query = $this->db->get();
+        return $query;
+    }
+
     public function check_unique_username($id, $username)
 	{
 		$this->db->where_not_in('id_user', $id);

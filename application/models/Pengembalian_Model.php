@@ -6,6 +6,17 @@ class Pengembalian_Model extends CI_Model
 		parent::__construct();
 	}
 
+	public function create($data)
+	{
+		$this->db->insert('pengembalian', $data);
+	}
+
+	public function update_status($id, $data)
+	{
+		$this->db->where('id_peminjaman', $id);
+		$this->db->update('pengembalian', $data);
+	}
+
 	function get_all()
 	{
 		 $this->db->order_by('kode_pengembalian','ASC');
@@ -29,12 +40,6 @@ class Pengembalian_Model extends CI_Model
         $query = $this->db->get('pengembalian');
         return $query->num_rows();
     }
-
-	function tambah($data)
-	{
-		$this->db->insert('pengembalian',$data);
-		return TRUE;
-	}
 
 	function update($id,$data)
 	{
@@ -66,6 +71,5 @@ class Pengembalian_Model extends CI_Model
 					->get('pengembalian')
 					->num_rows();
 	}
-
-
 }
+?>

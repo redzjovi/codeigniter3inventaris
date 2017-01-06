@@ -6,66 +6,26 @@ class Peminjaman_Model extends CI_Model
 		parent::__construct();
 	}
 
-	function get_all()
+	public function create($data)
 	{
-		 $this->db->order_by('kode_pinjam','ASC');
-		$query=$getData = $this->db->get('peminjaman');
-
-		if($getData->num_rows()>0)
-			return $query;
-		else
-			return null;
+		$this->db->insert('peminjaman', $data);
+		return $this->db->insert_id();
 	}
 
-	function get_byid($id)
+	public function get_all()
 	{
-		$this->db->where('kode_pinjam',$id);
-		return $this->db->get('peminjaman')->row();
+		$this->db->from('peminjaman');
+		$this->db->join('barang', 'barang.id_barang = peminjaman.id_barang', 'left');
+		$this->db->join('user', 'user.id_user = peminjaman.id_user', 'left');
+		$this->db->join('pengembalian', 'pengembalian.id_peminjaman = peminjaman.id_peminjaman', 'left');
+		$this->db->where('pengembalian.status', '');
+		return $this->db->get();
 	}
 
-	public function get_by_id_user($id)
+	public function get_by_id($id)
     {
-        $this->db->where('id_user', $id);
-        $query = $this->db->get('peminjaman');
-        return $query->num_rows();
+        $this->db->where('id_peminjaman', $id);
+        return $this->db->get('peminjaman')->row();
     }
-
-	public function tambah($data)
-	{
-		$this->db->insert('peminjaman',$data);
-		return TRUE;
-	}
-
-	function update($id,$data)
-	{
-		$this->db->where('kode_pinjam',$id);
-		$this->db->update('peminjaman',$data);
-	}
-
-	function delete($id)
-	{
-		$this->db->where('kode_pinjam',$id);
-		$this->db->delete('Peminjaman');
-	}
-
-	function search($jeniscari,$textcari)
-	{
-		$query = $this->db->query("select * from peminjaman where ".$jeniscari." like '%$textcari%'");
-		return $query->result();
-	}
-	function province($limit,$start)
-	{
-		return $this->db
-					->order_by('kode_pinjam','asc')
-					->limit($limit,$start)
-					->get_where('peminjaman');
-	}
-	function province_num_rows()
-	{
-		return $this->db
-					->get('peminjaman')
-					->num_rows();
-	}
-
-
 }
+?>

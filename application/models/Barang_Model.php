@@ -46,5 +46,12 @@ class Barang_Model extends CI_Model
         $query = $this->db->get('barang');
         return $query->num_rows();
     }
+
+    public function get_stock_by_id($id)
+    {
+        $this->db->where('id_barang', $id);
+        $data = $this->db->get('barang')->row();
+        return $data->jumlah_barang;
+    }
 }
 ?>

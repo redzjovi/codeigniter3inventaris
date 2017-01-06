@@ -120,5 +120,12 @@ class Barang extends CI_Controller
         $this->session->set_flashdata('message_success', 'Barang berhasil dihapus');
         redirect('admin/barang');
     }
+
+    public function get()
+    {
+        $id = $this->input->get('id');
+        $data = $this->Barang_Model->get_by_id($id);
+        echo json_encode($data);
+    }
 }
 ?>
