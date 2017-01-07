@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2017 at 06:13 PM
+-- Generation Time: Jan 07, 2017 at 06:51 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -34,7 +34,15 @@ CREATE TABLE IF NOT EXISTS `barang` (
   `jumlah_barang` int(11) NOT NULL,
   `status` enum('Baik','Rusak','Rusak Berat','Hilang') NOT NULL,
   `id_kategori` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`id_barang`, `kode_barang`, `nama_barang`, `jumlah_barang`, `status`, `id_kategori`) VALUES
+(1, 'B1', 'Barang 1', 5, 'Baik', 0),
+(2, 'B2', 'Barang 2', 10, 'Baik', 0);
 
 -- --------------------------------------------------------
 
@@ -51,7 +59,15 @@ CREATE TABLE IF NOT EXISTS `detail_barang` (
   `asal_dana` varchar(10) NOT NULL,
   `tahun_pengadaan` int(4) NOT NULL,
   `keterangan` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_barang`
+--
+
+INSERT INTO `detail_barang` (`id_detail_barang`, `id_barang`, `madein_barang`, `merk_barang`, `asal_dana`, `tahun_pengadaan`, `keterangan`) VALUES
+(1, 1, '', '', '', 0, ''),
+(2, 2, '', '', '', 0, '');
 
 -- --------------------------------------------------------
 
@@ -73,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `kategori_barang` (
 
 DROP TABLE IF EXISTS `peminjaman`;
 CREATE TABLE IF NOT EXISTS `peminjaman` (
-  `id_peminjaman` int(11) NOT NULL,
+`id_peminjaman` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `id_barang` int(11) NOT NULL,
   `jumlah_barang` int(11) NOT NULL,
@@ -96,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `pengembalian` (
   `id_barang` int(11) NOT NULL,
   `jumlah_barang` int(11) NOT NULL,
   `tanggal_kembali` date NOT NULL,
-  `tanggal_dikembalikan` date NOT NULL,
+  `tanggal_dikembalikan` datetime NOT NULL,
   `status` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -137,14 +153,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `jenis_kelamin` enum('L','P') NOT NULL,
   `jurusan` enum('TKI','RPL','TKJ','MM') NOT NULL,
   `id_role` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`id_user`, `username`, `password`, `nama_user`, `alamat`, `jenis_kelamin`, `jurusan`, `id_role`) VALUES
-(1, 'admin', 'admin', 'admin', '', 'L', 'RPL', 2);
+(1, 'admin', 'admin', 'admin', '', 'L', 'RPL', 2),
+(6, 'user1', 'user1', 'user1', '', 'L', 'MM', 1),
+(7, 'user2', 'user2', 'user2', '', 'L', 'MM', 1);
 
 --
 -- Indexes for dumped tables
@@ -200,17 +218,22 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `detail_barang`
 --
 ALTER TABLE `detail_barang`
-MODIFY `id_detail_barang` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id_detail_barang` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `kategori_barang`
 --
 ALTER TABLE `kategori_barang`
 MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `peminjaman`
+--
+ALTER TABLE `peminjaman`
+MODIFY `id_peminjaman` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pengembalian`
 --
@@ -225,7 +248,7 @@ MODIFY `id_role` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
